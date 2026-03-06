@@ -1,0 +1,100 @@
+name: XCUITestMCPExample
+options:
+  bundleIdPrefix: com.test
+  deploymentTarget:
+    iOS: "17.0"
+
+packages:
+  swift-xcuitest-mcp:
+    path: ../
+
+targets:
+  XCUITestMCPExample:
+    type: application
+    platform: iOS
+    sources:
+      - XCUITestMCPExample
+    settings:
+      base:
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.test.XCUITestMCPExample
+
+  XCUITestMCPExampleRunner:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - XCUITestMCPExampleRunner
+    dependencies:
+      - target: XCUITestMCPExample
+      - package: swift-xcuitest-mcp
+        product: XCUITestMCP
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.test.XCUITestMCPExampleRunner
+        TEST_TARGET_NAME: XCUITestMCPExample
+        TEST_HOST: ""
+
+  XCUITestMCPTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - XCUITestMCPTests
+    dependencies:
+      - target: XCUITestMCPExample
+      - package: swift-xcuitest-mcp
+        product: XCUITestMCP
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.test.XCUITestMCPTests
+        TEST_TARGET_NAME: XCUITestMCPExample
+
+  XCUITestMCPUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - XCUITestMCPUITests
+    dependencies:
+      - target: XCUITestMCPExample
+      - package: swift-xcuitest-mcp
+        product: XCUITestMCP
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.test.XCUITestMCPUITests
+        TEST_TARGET_NAME: XCUITestMCPExample
+        TEST_HOST: ""
+
+schemes:
+  XCUITestMCPExample:
+    build:
+      targets:
+        XCUITestMCPExample: all
+        XCUITestMCPExampleRunner: [test]
+        XCUITestMCPTests: [test]
+        XCUITestMCPUITests: [test]
+    test:
+      targets:
+        - XCUITestMCPTests
+        - XCUITestMCPUITests
+      testPlans: []
+
+  XCUITestMCPExampleRunner:
+    build:
+      targets:
+        XCUITestMCPExample: all
+        XCUITestMCPExampleRunner: [test]
+    test:
+      targets:
+        - XCUITestMCPExampleRunner
+      testPlans: []
